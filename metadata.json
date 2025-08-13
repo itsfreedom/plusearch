@@ -1,0 +1,5 @@
+{
+  "name": "Produce Search",
+  "description": "An advanced search tool for produce items. It allows searching by PLU, Korean, English, and French names. Features include responsive design, customizable column visibility and order, and seasonal information for each item.",
+  "requestFramePermissions": []
+}
