@@ -99,7 +99,7 @@ const App: React.FC = () => {
         <Header />
       </div>
       
-      <main className="max-w-5xl mx-auto w-full flex-grow px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8 space-y-6 mt-6">
+      <main className="max-w-5xl mx-auto w-full flex-grow px-4 sm:px-6 md:px-8 space-y-6 mt-6">
         
         {/* Search Section */}
         <section className="bg-white p-6 rounded-lg shadow-md">
@@ -127,7 +127,7 @@ const App: React.FC = () => {
                 columnVisibility={columnVisibility}
               />
               {totalPages > 1 && (
-                <div className="mt-4">
+                <div className="mt-8 mb-4">
                   <Pagination 
                     currentPage={currentPage}
                     totalPages={totalPages}
@@ -145,7 +145,7 @@ const App: React.FC = () => {
         </section>
 
         {/* Footer Section */}
-        <section className="bg-white p-4 rounded-t-lg shadow-md">
+        <section className="bg-teal-600 p-4 shadow-md rounded-t-lg">
             <Footer />
         </section>
 
