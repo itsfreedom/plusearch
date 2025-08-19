@@ -95,11 +95,11 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800 font-sans flex flex-col">
-      <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8">
+      <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 md:px-8">
         <Header />
       </div>
       
-      <main className="max-w-5xl mx-auto w-full flex-grow px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8 space-y-6">
+      <main className="max-w-5xl mx-auto w-full flex-grow px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8 space-y-6 mt-6">
         
         {/* Search Section */}
         <section className="bg-white p-6 rounded-lg shadow-md">
@@ -115,7 +115,7 @@ const App: React.FC = () => {
         </section>
 
         {/* Table Section */}
-        <section className="bg-white rounded-lg shadow-md overflow-hidden">
+        <section className="bg-white p-4 rounded-lg shadow-md">
           {sortedData.length > 0 ? (
             <PluTable 
               data={paginatedData} 

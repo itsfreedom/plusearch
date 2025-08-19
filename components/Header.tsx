@@ -1,18 +1,20 @@
 
 import React from 'react';
 
-// Embedded H Mart logo as a data URI to avoid adding a new file asset
-const logoDataUri = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgMjAwIDYwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMzEuNjMyMiAzMC4xMjA0VjQ0LjM0SDE5LjUwMDJWMTUuNjZIMzEuNjMyMlYyNy42MzY0SDQzLjU2NjJWMTUuNjZINTUuNzAwMlY0NC4zNEg0My41NjYyVjMyLjYwNDRI MzEuNjMyMlYyOS45MDI0SDMxLjYzMjJWMzAuMTIwNFoiIGZpbGw9IiMwMEE0NTkiLz4KPHBhdGggZD0iTTc0LjQ0NDQgMTUuNjZINTguOTU0NVY0NC4zNEg3NC40NDQ0QzgwLjI4MzIgNDQuMzQgODQuNzc0OCA0Mi4zODY0IDg3LjkxODYgMzguNTAzMkM5MS4wNjI1   0IDM0LjYxOTkgOTIuNjM2NCAyOS45NzU4IDkyLjYzNjQgMjQuNDk4MkM5Mi42MzY0IDE5LjAyMDYgOTEuMDYyNSAxNC4zNzY1IDg3LjkxODYgMTAuNDkzMkM4NC43NzQ4IDYuNjA5OTIgODAuMjgzMiA0LjY0MzE4IDc0LjQ0NDQgNC42NDMxOEwxNS42NiA0LjY0MzE4TDE1LjY2IDE1LjY2SDc0LjQ0NDRDNzUuODU1MSA   xNS42NiA3Ny4xMjI2IDE2LjE3NTggNzguMDYyIDE3LjExNTJDNzkuMDAxNSAxOC4wNTQ3IDc5LjUyOTUgMTkuMDI4IDc5LjUyOTUgMjAuMTQ0M1YyMS4yMTQ4SDU4Ljk1NDVWNDQuMzRIMzcuMjc4NFYxNS42Nkg1OC45NTQ1VjI3LjAyMjdINzkuNTI5NVYyOC4wOTMzQzc5LjUyOTUgMjkuMjA5NiA3OS4wMDE1IDMwLjE4MjggNzguMDYyIDMxLjEyMjNDNzcuMTIyNiAzMi4wNjE4IDc1Ljg1NTEgMzIuNTc3NiA3NC40NDQ0IDMyLjU3NzZINTguOTU0NVY0NC4zNEg3NC40NDQ0QzgxLjU5NzYgNDQuMzQgODYuODkyNiA0MS40NTY4IDkwLjMzMzYgMzUuNjgxOEM5My43NzQ1ADMxLjA5MiA5NS40OTEgMjYuMjEyMiA5NS40OTEgMjAuMTQ0M0M5NS40OTEgMTQuMDc2NSA5My43NzQ1IDkuMjAwNjcgOTAuMzMzNiA0LjYxMDg3Qzg2Ljg5MjYgMCA4MS41OTc2IDE1LjY2IDc0LjQ0NDQgMTUuNjZaIiBmaWxsPSIjRUIwMDQ1Ii8+CjxwYXRoIGQ9Ik0xMjIuMjE2IDE1LjY2SDEwNi43MjZWMzYuNjY2NEgxMjIuMjE2QzEyOC4wNTUgMzYuNjY2NCAxMzIuNTQ2IDM0LjY5OTcgMTM1LjY5IDMxLjAxNjRDMTM4LjgzNCAyNy4zMzMyIDE0MC40MDkgMjIuNjg5MiAxNDAuNDA5IDE3LjIxMTZDMTQwLjQwOSA4LjI2MjEgMTM3LjI2NSAxLjgzNTIgMTMwLjk4MSAxLjgzNTJDMTE5LjUyNyAxLjgzNTIgMTIxLjU4NiAxNS42NiAxMjIuMjE2IDE1LjY2Wk0xMTguODggMTUuNjZIMTIyLjIxNkMxMjQuMTY0IDE1LjY2IDEyNS4xNzYgMTUuOTc1OCAxMjYuMDUgMTYuNjA3NkMxMjYuOTI1IDE3LjIzOTQgMTI3LjM2MiAxOC4xODcxIDEyNy4zNjIgMTkuNDUxMVYyMC41MjE4SDExOC44OFYxNS42NlpNMTIyLjIxNiAyOC4wMTkySDExOC44OFYyMy4wMTAySDEyMi4yMTZIMTI0LjQ3N0MxMjUuNDI0IDIzLjAxMDIgMTI2LjQzNiAyMy4zMjYgMTI3LjMxIDI0LjA1NDdDMTI4LjE4NCAyNC43ODMzIDEyOC42MjEgMjUuNzMwMiAxMjguNjIxIDI3LjA0ODVW MjguMDE5MkgxMjIuMjE2WiIgZmlsbD0iIzAwQTQ1OSIvPgo8cGF0aCBkPSJNMTYxLjYyNSAxNS42NkwxNTAuNjgxIDMyLjY0OEwxMzkuNzM2IDE1LjY2SDEyNS44MTZMMTQ1LjM5NyAzNy4yOTQ0VjQ0LjM0SDE1NS45NjVW MzcuMjk0NEwxNzUuNTQ3IDE1LjY2SDE2MS42MjVaIiBmaWxsPSIjRUIwMDQ1Ii8+Cjwvc3ZnPgo=";
-
 const Header: React.FC = () => {
     return (
-        <header className="bg-teal-600 text-white p-4 shadow-md rounded-lg">
+        <header className="bg-teal-600 text-white p-6 shadow-md rounded-b-lg">
             <div className="flex justify-between items-end">
                 <div className="flex items-end space-x-4">
-                    <img src={logoDataUri} alt="H Mart Logo" className="h-8" />
-                    <span className="text-xl font-light pb-1">Montreal</span>
+                    <img src="/logo.png" alt="H Mart Logo" className="h-8" />
+                    <span 
+                        className="text-lg font-bold pb-1"
+                        style={{ color: '#DC143C' }}
+                    >
+                        Montreal
+                    </span>
                 </div>
-                <h2 className="text-2xl font-bold">Produce Search</h2>
+                <h2 className="text-xl font-bold">Produce Search</h2>
             </div>
         </header>
     );

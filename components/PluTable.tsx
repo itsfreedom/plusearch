@@ -45,7 +45,7 @@ const PluTable: React.FC<PluTableProps> = ({
   const visibleColumnCount = 1 + columnOrder.filter(key => columnVisibility[key]).length;
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto border border-gray-200 rounded-lg">
       <table className="min-w-full text-sm text-left text-gray-700">
         <thead className="bg-gray-50 text-xs text-gray-500 uppercase tracking-wider">
           <tr>
