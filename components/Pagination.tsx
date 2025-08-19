@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface PaginationProps {
@@ -6,6 +5,18 @@ interface PaginationProps {
   totalPages: number;
   onPageChange: (page: number) => void;
 }
+
+const PrevIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+  </svg>
+);
+
+const NextIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+);
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) {
@@ -40,7 +51,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
   };
 
   const pageNumbers = getPageNumbers();
-  const commonButtonClasses = "px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150";
+  const commonButtonClasses = "w-10 h-10 flex items-center justify-center text-sm font-medium rounded-md transition-colors duration-150";
   const activeClasses = "bg-sky-600 text-white border border-sky-600";
   const inactiveClasses = "bg-white text-gray-700 hover:bg-sky-100 border border-gray-300";
   const disabledClasses = "bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200";
@@ -53,7 +64,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         className={`${commonButtonClasses} ${currentPage === 1 ? disabledClasses : inactiveClasses}`}
         aria-label="Go to previous page"
       >
-        Prev
+        <span className="sr-only">Previous</span>
+        <PrevIcon />
       </button>
 
       {pageNumbers.map((page) => (
@@ -62,6 +74,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           onClick={() => onPageChange(page)}
           className={`${commonButtonClasses} ${currentPage === page ? activeClasses : inactiveClasses}`}
           aria-current={currentPage === page ? 'page' : undefined}
+          aria-label={`Go to page ${page}`}
         >
           {page}
         </button>
@@ -73,7 +86,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         className={`${commonButtonClasses} ${currentPage === totalPages ? disabledClasses : inactiveClasses}`}
         aria-label="Go to next page"
       >
-        Next
+        <span className="sr-only">Next</span>
+        <NextIcon />
       </button>
     </nav>
   );
