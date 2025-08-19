@@ -1,0 +1,5 @@
+{
+  "name": "PLU Code Finder",
+  "description": "An efficient tool to search for PLU (Price Look-Up) codes for produce. Instantly find codes and names in Korean, English, and French.",
+  "requestFramePermissions": []
+}
