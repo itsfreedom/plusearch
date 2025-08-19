@@ -11,11 +11,11 @@ interface PluTableProps {
   columnVisibility: Record<ColumnKey, boolean>;
 }
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 10;
 
 const SortIcon: React.FC<{ direction: 'ascending' | 'descending' | null }> = ({ direction }) => {
-  if (direction === 'ascending') return <span className="text-teal-500">▲</span>;
-  if (direction === 'descending') return <span className="text-teal-500">▼</span>;
+  if (direction === 'ascending') return <span className="text-sky-600">▲</span>;
+  if (direction === 'descending') return <span className="text-sky-600">▼</span>;
   return <span className="text-gray-400">↕</span>;
 };
 
@@ -47,7 +47,7 @@ const PluTable: React.FC<PluTableProps> = ({
   return (
     <div className="overflow-x-auto border border-gray-200 rounded-lg">
       <table className="min-w-full text-sm text-left text-gray-700">
-        <thead className="bg-gray-50 text-xs text-gray-500 uppercase tracking-wider">
+        <thead className="bg-gray-50 text-xs text-gray-600 uppercase tracking-wider">
           <tr>
             <th scope="col" className="px-6 py-4 font-semibold w-1/6">
                 <button onClick={() => onSort('plu')} className="flex items-center gap-2 hover:text-gray-900">PLU <SortIcon direction={getSortDirection('plu')} /></button>
@@ -69,14 +69,24 @@ const PluTable: React.FC<PluTableProps> = ({
         <tbody className="divide-y divide-gray-200">
           {data.map((item, index) => (
             <tr key={`${item.plu}-${index}`} className="hover:bg-gray-50 transition-colors duration-150 ease-in-out">
-              <td className="px-6 py-4 font-mono font-bold text-teal-600 whitespace-nowrap">{item.plu}</td>
+              <td className="px-6 py-4 font-mono whitespace-nowrap">
+                <a
+                  href={`https://www.google.com/search?q=PLU+code+${item.plu}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                  aria-label={`Search for PLU code ${item.plu} on Google`}
+                >
+                  {item.plu}
+                </a>
+              </td>
               {columnOrder.map(key => {
                 if (!columnVisibility[key]) return null;
                 
                 if (key === 'season') {
                   return (
                     <td key={key} className="px-6 py-4 text-center">
-                      <button onClick={() => onInfoClick(item)} className="text-gray-400 hover:text-teal-500 transition-colors" aria-label={`View season for ${item.english}`}>
+                      <button onClick={() => onInfoClick(item)} className="text-gray-400 hover:text-sky-600 transition-colors" aria-label={`View season for ${item.english}`}>
                           <InfoIcon />
                       </button>
                     </td>

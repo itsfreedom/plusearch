@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface SearchBarProps {
@@ -22,7 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
             value={value}
             onChange={onChange}
             placeholder="Search by PLU, Korean, English, or French name..."
-            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-300"
+            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
             aria-label="Search PLU codes"
         />
     </div>

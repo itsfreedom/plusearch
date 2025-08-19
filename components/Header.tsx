@@ -1,20 +1,20 @@
-
 import React from 'react';
+import Logo from './Logo';
 
 const Header: React.FC = () => {
     return (
-        <header className="bg-teal-600 text-white p-6 shadow-md rounded-b-lg">
+        <header className="bg-sky-500/50 text-sky-900 p-6 shadow-md rounded-b-lg">
             <div className="flex justify-between items-end">
-                <div className="flex items-end space-x-4">
-                    <img src="logo.png" alt="H Mart Logo" className="h-8" />
+                <div className="flex items-end space-x-2">
+                    <Logo className="h-6" />
                     <span 
-                        className="text-lg font-bold pb-1"
+                        className="text-sm font-bold relative top-[3px]"
                         style={{ color: '#DC143C' }}
                     >
                         Montreal
                     </span>
                 </div>
-                <h2 className="text-xl font-bold">Produce Search</h2>
+                <h2 className="text-lg font-bold relative top-[5px] text-white">Produce Search</h2>
             </div>
         </header>
     );

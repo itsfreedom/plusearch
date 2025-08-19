@@ -41,8 +41,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
   const pageNumbers = getPageNumbers();
   const commonButtonClasses = "px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150";
-  const activeClasses = "bg-teal-600 text-white border border-teal-600";
-  const inactiveClasses = "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300";
+  const activeClasses = "bg-sky-600 text-white border border-sky-600";
+  const inactiveClasses = "bg-white text-gray-700 hover:bg-sky-100 border border-gray-300";
   const disabledClasses = "bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200";
 
   return (

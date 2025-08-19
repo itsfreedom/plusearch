@@ -11,7 +11,7 @@ import ColumnToggles from './components/ColumnToggles';
 import Pagination from './components/Pagination';
 
 const initialColumns: ColumnKey[] = ['korean', 'english', 'french', 'season'];
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 10;
 
 const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -94,7 +94,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800 font-sans flex flex-col">
+    <div className="min-h-screen bg-white text-gray-800 font-sans flex flex-col">
       <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 md:px-8">
         <Header />
       </div>
@@ -102,7 +102,7 @@ const App: React.FC = () => {
       <main className="max-w-5xl mx-auto w-full flex-grow px-4 sm:px-6 md:px-8 space-y-6 mt-6">
         
         {/* Search Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md">
+        <section className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
           <div className="sticky top-4 z-20 mb-4">
             <SearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
           </div>
@@ -115,7 +115,7 @@ const App: React.FC = () => {
         </section>
 
         {/* Table & Pagination Section */}
-        <section className="bg-white p-4 rounded-lg shadow-md">
+        <section className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
           {sortedData.length > 0 ? (
             <>
               <PluTable 
@@ -145,7 +145,7 @@ const App: React.FC = () => {
         </section>
 
         {/* Footer Section */}
-        <section className="bg-teal-600 p-4 shadow-md rounded-t-lg">
+        <section className="bg-sky-500/50 p-4 mt-8 rounded-t-lg">
             <Footer />
         </section>
 

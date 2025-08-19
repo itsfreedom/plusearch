@@ -79,24 +79,24 @@ const ColumnToggles: React.FC<ColumnTogglesProps> = ({ visibility, onToggle, col
                         onDrop={(e) => handleDrop(e, key)}
                         onDragEnd={handleDragEnd}
                         style={{ cursor: 'grab' }}
-                        className={`relative flex items-center px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 focus-within:ring-2 focus-within:ring-teal-500 focus-within:ring-offset-2 bg-white border ${
+                        className={`relative flex items-center px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 focus-within:ring-2 focus-within:ring-sky-500 focus-within:ring-offset-2 bg-white border ${
                             visibility[key]
-                            ? 'border-teal-500 shadow-sm'
+                            ? 'border-sky-500 shadow-sm'
                             : 'border-gray-300 hover:bg-gray-50'
                         } ${isDragging ? 'opacity-50 scale-105 shadow-lg' : 'opacity-100'}`}
                     >
-                        {isDragOver && <div className="absolute top-0 left-0 h-full w-1 bg-teal-400 rounded" aria-hidden="true" />}
+                        {isDragOver && <div className="absolute top-0 left-0 h-full w-1 bg-sky-500 rounded" aria-hidden="true" />}
                         <input
                             type="checkbox"
                             checked={visibility[key]}
                             onChange={() => onToggle(key)}
                             className={`h-4 w-4 rounded transition-colors duration-200 focus:ring-2 focus:ring-offset-2 ${
                                 visibility[key] 
-                                ? 'bg-teal-600 border-transparent text-white focus:ring-white focus:ring-offset-teal-600'
-                                : 'bg-white border-gray-300 text-teal-600 focus:ring-teal-500 focus:ring-offset-gray-100'
+                                ? 'bg-white border-sky-600 text-sky-600 focus:ring-sky-500 focus:ring-offset-white'
+                                : 'bg-white border-gray-300 text-transparent focus:ring-sky-500 focus:ring-offset-white'
                             }`}
                         />
-                        <span className={`ml-3 select-none text-sm font-medium ${visibility[key] ? 'text-teal-700' : 'text-gray-800'}`}>{columnDisplayNames[key]}</span>
+                        <span className={`ml-3 select-none text-sm font-medium ${visibility[key] ? 'text-sky-900' : 'text-gray-800'}`}>{columnDisplayNames[key]}</span>
                     </label>
                 )
             })}

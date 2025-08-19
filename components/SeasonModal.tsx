@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { PluItem } from '../types';
 
@@ -27,7 +28,7 @@ const SeasonModal: React.FC<SeasonModalProps> = ({ item, onClose }) => {
         }}
       >
         <header className="mb-4">
-            <h2 id="season-modal-title" className="text-2xl font-bold text-teal-600">{item.korean}</h2>
+            <h2 id="season-modal-title" className="text-2xl font-bold text-gray-900">{item.korean}</h2>
             <p className="text-lg text-gray-600">{item.english}</p>
         </header>
         
@@ -38,7 +39,7 @@ const SeasonModal: React.FC<SeasonModalProps> = ({ item, onClose }) => {
         
         <button 
           onClick={onClose} 
-          className="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-75 transition duration-300"
+          className="mt-6 w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-75 transition duration-300"
           aria-label="Close modal"
         >
           Close
