@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import type { ColumnKey } from '../types';
 
 interface ColumnTogglesProps {
@@ -19,7 +19,24 @@ const columnDisplayNames: Record<ColumnKey, string> = {
 const ColumnToggles: React.FC<ColumnTogglesProps> = ({ visibility, onToggle, columnOrder, onColumnOrderChange }) => {
   const [draggedKey, setDraggedKey] = useState<ColumnKey | null>(null);
   const [dragOverKey, setDragOverKey] = useState<ColumnKey | null>(null);
+  const itemRefs = useRef<Partial<Record<ColumnKey, HTMLLabelElement | null>>>({});
 
+  const reorderColumns = (dragKey: ColumnKey, dropKey: ColumnKey) => {
+    if (dragKey === dropKey) return;
+
+    const newOrder = [...columnOrder];
+    const draggedIndex = newOrder.indexOf(dragKey);
+    const targetIndex = newOrder.indexOf(dropKey);
+    
+    if (draggedIndex === -1 || targetIndex === -1) return;
+
+    newOrder.splice(draggedIndex, 1);
+    newOrder.splice(targetIndex, 0, dragKey);
+
+    onColumnOrderChange(newOrder);
+  };
+
+  // --- Desktop Drag & Drop Handlers ---
   const handleDragStart = (e: React.DragEvent<HTMLLabelElement>, key: ColumnKey) => {
     setDraggedKey(key);
     e.dataTransfer.effectAllowed = 'move';
@@ -40,18 +57,9 @@ const ColumnToggles: React.FC<ColumnTogglesProps> = ({ visibility, onToggle, col
 
   const handleDrop = (e: React.DragEvent<HTMLLabelElement>, targetKey: ColumnKey) => {
     e.preventDefault();
-    if (!draggedKey || draggedKey === targetKey) {
-      return;
+    if (draggedKey) {
+        reorderColumns(draggedKey, targetKey);
     }
-
-    const newOrder = [...columnOrder];
-    const draggedIndex = newOrder.indexOf(draggedKey);
-    const targetIndex = newOrder.indexOf(targetKey);
-
-    newOrder.splice(draggedIndex, 1);
-    newOrder.splice(targetIndex, 0, draggedKey);
-
-    onColumnOrderChange(newOrder);
     setDraggedKey(null);
     setDragOverKey(null);
   };
@@ -61,24 +69,67 @@ const ColumnToggles: React.FC<ColumnTogglesProps> = ({ visibility, onToggle, col
     setDragOverKey(null);
   };
 
+  // --- Mobile Touch Handlers ---
+  const handleTouchStart = (key: ColumnKey) => {
+    setDraggedKey(key);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!draggedKey) return;
+
+    const touch = e.touches[0];
+    const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    let currentOverKey: ColumnKey | null = null;
+    if (targetElement) {
+        for (const key of columnOrder) {
+            if (itemRefs.current[key]?.contains(targetElement)) {
+                currentOverKey = key;
+                break;
+            }
+        }
+    }
+    
+    if (currentOverKey && currentOverKey !== draggedKey) {
+      setDragOverKey(currentOverKey);
+    } else if (!currentOverKey) {
+      setDragOverKey(null);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (draggedKey && dragOverKey) {
+        reorderColumns(draggedKey, dragOverKey);
+    }
+    setDraggedKey(null);
+    setDragOverKey(null);
+  };
+
 
   return (
     <div>
         <p className="text-sm text-gray-600 mb-2 font-semibold">Toggle & Reorder Columns</p>
-        <div className="flex flex-wrap gap-3">
+        <div 
+            className="flex flex-wrap gap-3"
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseUp={handleDragEnd} // Also clean up on mouse up in case dragEnd doesn't fire
+        >
             {columnOrder.map((key) => {
                 const isDragging = draggedKey === key;
                 const isDragOver = dragOverKey === key;
                 return (
                     <label
                         key={key}
+                        ref={el => { itemRefs.current[key] = el; }}
                         draggable
                         onDragStart={(e) => handleDragStart(e, key)}
                         onDragOver={(e) => handleDragOver(e, key)}
                         onDragLeave={handleDragLeave}
                         onDrop={(e) => handleDrop(e, key)}
                         onDragEnd={handleDragEnd}
-                        style={{ cursor: 'grab' }}
+                        onTouchStart={() => handleTouchStart(key)}
+                        style={{ cursor: 'grab', touchAction: 'none' }}
                         className={`relative flex items-center px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 focus-within:ring-2 focus-within:ring-sky-500 focus-within:ring-offset-2 bg-white border ${
                             visibility[key]
                             ? 'border-sky-500 shadow-sm'
