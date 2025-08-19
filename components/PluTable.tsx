@@ -11,6 +11,8 @@ interface PluTableProps {
   columnVisibility: Record<ColumnKey, boolean>;
 }
 
+const ITEMS_PER_PAGE = 20;
+
 const SortIcon: React.FC<{ direction: 'ascending' | 'descending' | null }> = ({ direction }) => {
   if (direction === 'ascending') return <span className="text-teal-500">▲</span>;
   if (direction === 'descending') return <span className="text-teal-500">▼</span>;
@@ -34,19 +36,13 @@ const PluTable: React.FC<PluTableProps> = ({
     data, onSort, sortConfig, onInfoClick,
     columnOrder, columnVisibility
 }) => {
-  if (data.length === 0) {
-    return (
-      <div className="text-center py-16 px-4">
-        <p className="text-xl text-gray-600">No results found.</p>
-        <p className="text-md text-gray-400 mt-2">Try a different search term.</p>
-      </div>
-    );
-  }
-  
   const getSortDirection = (key: keyof PluItem) => {
       if (!sortConfig || sortConfig.key !== key) return null;
       return sortConfig.direction;
   }
+
+  const emptyRows = ITEMS_PER_PAGE - data.length;
+  const visibleColumnCount = 1 + columnOrder.filter(key => columnVisibility[key]).length;
 
   return (
     <div className="overflow-x-auto">
@@ -89,6 +85,11 @@ const PluTable: React.FC<PluTableProps> = ({
 
                 return <td key={key} className="px-6 py-4">{item[key]}</td>;
               })}
+            </tr>
+          ))}
+          {emptyRows > 0 && Array.from({ length: emptyRows }).map((_, index) => (
+            <tr key={`empty-${index}`}>
+              <td colSpan={visibleColumnCount} className="px-6 py-4">&nbsp;</td>
             </tr>
           ))}
         </tbody>

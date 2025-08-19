@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { pluData } from './data';
 import type { PluItem, SortConfig, ColumnKey } from './types';
 import Header from './components/Header';
@@ -8,13 +8,16 @@ import PluTable from './components/PluTable';
 import Footer from './components/Footer';
 import SeasonModal from './components/SeasonModal';
 import ColumnToggles from './components/ColumnToggles';
+import Pagination from './components/Pagination';
 
 const initialColumns: ColumnKey[] = ['korean', 'english', 'french', 'season'];
+const ITEMS_PER_PAGE = 20;
 
 const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState<SortConfig>(null);
   const [selectedItem, setSelectedItem] = useState<PluItem | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   
   const [columnOrder, setColumnOrder] = useState<ColumnKey[]>(initialColumns);
   const [columnVisibility, setColumnVisibility] = useState<Record<ColumnKey, boolean>>({
@@ -55,12 +58,27 @@ const App: React.FC = () => {
     return sortableItems;
   }, [filteredData, sortConfig]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, sortConfig]);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(sortedData.length / ITEMS_PER_PAGE);
+  }, [sortedData]);
+
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return sortedData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [sortedData, currentPage]);
+
+
   const requestSort = (key: keyof PluItem) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
     }
     setSortConfig({ key, direction });
+    setCurrentPage(1);
   };
 
   const handleInfoClick = (item: PluItem) => {
@@ -98,15 +116,33 @@ const App: React.FC = () => {
 
         {/* Table Section */}
         <section className="bg-white rounded-lg shadow-md overflow-hidden">
-          <PluTable 
-            data={sortedData} 
-            onSort={requestSort}
-            sortConfig={sortConfig}
-            onInfoClick={handleInfoClick}
-            columnOrder={columnOrder}
-            columnVisibility={columnVisibility}
-          />
+          {sortedData.length > 0 ? (
+            <PluTable 
+              data={paginatedData} 
+              onSort={requestSort}
+              sortConfig={sortConfig}
+              onInfoClick={handleInfoClick}
+              columnOrder={columnOrder}
+              columnVisibility={columnVisibility}
+            />
+          ) : (
+            <div className="text-center py-16 px-4">
+              <p className="text-xl text-gray-600">No results found.</p>
+              <p className="text-md text-gray-400 mt-2">Try a different search term.</p>
+            </div>
+          )}
         </section>
+
+        {/* Pagination Section */}
+        {totalPages > 1 && (
+          <section className="bg-white p-4 rounded-lg shadow-md">
+            <Pagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </section>
+        )}
 
         {/* Footer Section */}
         <section className="bg-white p-4 rounded-lg shadow-md">
