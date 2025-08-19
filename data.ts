@@ -278,4 +278,5 @@ export const pluData: PluItem[] = lines
     }
     return null;
   })
-  .filter((item): item is PluItem => item !== null && item.plu !== '');
+  .filter((item): item is PluItem => item !== null && item.plu !== '')
+  .filter(item => !item.korean.includes('(내부)'));
