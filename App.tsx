@@ -114,17 +114,28 @@ const App: React.FC = () => {
           />
         </section>
 
-        {/* Table Section */}
+        {/* Table & Pagination Section */}
         <section className="bg-white p-4 rounded-lg shadow-md">
           {sortedData.length > 0 ? (
-            <PluTable 
-              data={paginatedData} 
-              onSort={requestSort}
-              sortConfig={sortConfig}
-              onInfoClick={handleInfoClick}
-              columnOrder={columnOrder}
-              columnVisibility={columnVisibility}
-            />
+            <>
+              <PluTable 
+                data={paginatedData} 
+                onSort={requestSort}
+                sortConfig={sortConfig}
+                onInfoClick={handleInfoClick}
+                columnOrder={columnOrder}
+                columnVisibility={columnVisibility}
+              />
+              {totalPages > 1 && (
+                <div className="mt-4">
+                  <Pagination 
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-16 px-4">
               <p className="text-xl text-gray-600">No results found.</p>
@@ -133,19 +144,8 @@ const App: React.FC = () => {
           )}
         </section>
 
-        {/* Pagination Section */}
-        {totalPages > 1 && (
-          <section className="bg-white p-4 rounded-lg shadow-md">
-            <Pagination 
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
-          </section>
-        )}
-
         {/* Footer Section */}
-        <section className="bg-white p-4 rounded-lg shadow-md">
+        <section className="bg-white p-4 rounded-t-lg shadow-md">
             <Footer />
         </section>
 
